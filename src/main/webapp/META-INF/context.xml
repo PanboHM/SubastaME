@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/SubastaME" docBase="SubastaME">
+    <Resource
+        name="jdbc/SubastaME"
+        auth="Container"
+        type="javax.sql.DataSource"
+        maxActive="100"
+        maxIdle="30"
+        maxWait="10000"
+        username="java2018"
+        password="2018"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/subastas?autoReconnect=true" 
+    />
+</Context>
