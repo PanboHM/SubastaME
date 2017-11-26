@@ -5,6 +5,8 @@
  */
 package es.jesushm.DAOFactory;
 
+import es.jesushm.DAOs.CategoriasDAO;
+import es.jesushm.DAOs.ICategoriasDAO;
 import es.jesushm.DAOs.IUsuariosDAO;
 import es.jesushm.DAOs.UsuariosDAO;
 
@@ -15,8 +17,13 @@ import es.jesushm.DAOs.UsuariosDAO;
 public class MySQLDAOFactory extends DAOFactory {
 
     @Override
-    public IUsuariosDAO getUsuarioDAO() {
+    public IUsuariosDAO getUsuariosDAO() {
         return new UsuariosDAO();
+    }
+
+    @Override
+    public ICategoriasDAO getCategoriaDAO() {
+        return new CategoriasDAO();
     }
 
 }

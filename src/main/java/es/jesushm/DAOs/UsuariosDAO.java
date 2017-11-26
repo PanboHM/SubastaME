@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  *
@@ -29,7 +28,7 @@ public class UsuariosDAO implements IUsuariosDAO {
         conexion = ConnectionFactory.getConnection();
         String sql = "insert into usuarios(email,password,ultimoAcceso) values(?,SHA(?),?)";
         try {
-            preparada = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparada = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             preparada.setString(1, usuario.getEmail());
             preparada.setString(2, usuario.getPassword());
             Timestamp sqlDate = new Timestamp(usuario.getUltimoAcceso().getTime());
@@ -52,22 +51,9 @@ public class UsuariosDAO implements IUsuariosDAO {
             System.out.println("ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
             return false;
         } finally {
-            try {
-                if (preparada != null) {
-                    preparada.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            try {
-                if (resultado != null) {
-                    resultado.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            cerrarPSyRS(preparada, resultado);
+            ConnectionFactory.closeConnection();
         }
-        ConnectionFactory.closeConnection();
         return true;
     }
 
@@ -78,7 +64,7 @@ public class UsuariosDAO implements IUsuariosDAO {
         ResultSet resultado = null;
         conexion = ConnectionFactory.getConnection();
         Cliente cliente = new Cliente();
-        String sql = "select * from usuarios natural join clientes where email=? and password=SHA(?)";
+        String sql = "select * from usuarios inner join clientes on idUsuario = idCliente where email = ? and password = SHA(?)";
         try {
             preparada = conexion.prepareStatement(sql);
             preparada.setString(1, usuario.getEmail());
@@ -96,22 +82,9 @@ public class UsuariosDAO implements IUsuariosDAO {
             System.out.println("ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
             return null;
         } finally {
-            try {
-                if (preparada != null) {
-                    preparada.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            try {
-                if (resultado != null) {
-                    resultado.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            cerrarPSyRS(preparada, resultado);
+            ConnectionFactory.closeConnection();
         }
-        ConnectionFactory.closeConnection();
         return usuario;
     }
 
@@ -132,23 +105,27 @@ public class UsuariosDAO implements IUsuariosDAO {
             System.out.println("ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
             return false;
         } finally {
-            try {
-                if (preparada != null) {
-                    preparada.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            try {
-                if (resultado != null) {
-                    resultado.close();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            cerrarPSyRS(preparada, resultado);
+            ConnectionFactory.closeConnection();
         }
-        ConnectionFactory.closeConnection();
         return true;
+    }
+
+    private void cerrarPSyRS(PreparedStatement preparada, ResultSet resultado) {
+        try {
+            if (preparada != null) {
+                preparada.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        try {
+            if (resultado != null) {
+                resultado.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

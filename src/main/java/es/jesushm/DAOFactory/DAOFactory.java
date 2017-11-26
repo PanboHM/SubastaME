@@ -5,6 +5,7 @@
  */
 package es.jesushm.DAOFactory;
 
+import es.jesushm.DAOs.ICategoriasDAO;
 import es.jesushm.DAOs.IUsuariosDAO;
 
 /**
@@ -16,9 +17,10 @@ public abstract class DAOFactory {
 //    public static final int MYSQL = 1;
 //    public static final int ORACLE = 2;
 //    public static final int DERBY = 3;
-    public abstract IUsuariosDAO getUsuarioDAO();
+    public abstract IUsuariosDAO getUsuariosDAO();
+    public abstract ICategoriasDAO getCategoriaDAO();
 
-    public static DAOFactory getDAOFactory() { //este metodo podría recibir un entero para el switch
+    public static DAOFactory getDAOFactory() { //este metodo podría recibir un entero en el switch para decidir que base de datos vamos a usar
         DAOFactory daoF = new MySQLDAOFactory();
 
 //        switch (tipo) {

@@ -17,9 +17,9 @@
         <form action="<c:url value="/RegistroLogin"/>" method="post" id="login">
             <fieldset>
                 <label for="email">Correo electrónico: </label>
-                <input type="mail" name="email" id="email" required=""/>
+                <input type="mail" name="email" id="email" required="" class="form-control"/>
                 <label for="password">Contraseña: </label>
-                <input type="password" name="password" id="password" required=""/>
+                <input type="password" name="password" id="password" required="" class="form-control"/>
                 <input type="reset"/> 
                 <button type="submit" name="enviar" value="login">Logear</button>
         </form> 

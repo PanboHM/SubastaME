@@ -13,16 +13,20 @@
         <c:import url="/jsp/inc/header.jsp"/>
         <script>
             $(document).ready(function () {
-                $("#email").on("blur", function () {
-                    $.post("<c:url value='/RegistroLogin'/>", {
-                        datoEmail: $("#email").val()
-                    }, function (respuesta) {
-                        if (respuesta == "true") {
-                            $("#enUso").html("<p class='bg-danger'>Usuario en uso</p>");
-                        } else {
-                            $("#enUso").html("<p class='bg-success'>Usuario disponible</p>");
-                        }
-                    });
+                $("#email").on("blur", function () { //al quitar el foco de "usuario" este metodo comprueba su disponibilidad en la base de datos
+                    if (/^[a-z0-9][a-z0-9._%+-]*@[a-z0-9.-]+\.[a-z]{2,4}\b/.test($(this).val())) { //antes de llamar a AJAX se comprueba si el email es correcto
+                        $.post("<c:url value='/RegistroLogin'/>", {//lama al servlet que le responderá "true" o "false"
+                            datoEmail: $(this).val()
+                        }, function (respuesta) { //en funcion de la respuesta se mostrará un mensaje u otro
+                            if (respuesta == "true") {
+                                $("#enUso").html("<p class='bg-danger'>Usuario en uso</p>");
+                            } else {
+                                $("#enUso").html("<p class='bg-success'>Usuario disponible</p>");
+                            }
+                        });
+                    } else { //si el email no es correcto se le indica al usuario
+                        $("#enUso").html("<p class='bg-warning'>Formato no correcto</p>");
+                    }
                 });
             });
         </script>
@@ -33,7 +37,7 @@
             <fieldset>
                 <legend>Datos de acceso</legend>
                 <label for="email">Correo electrónico: </label>
-                <input type="mail" name="email" id="email" required="" class="form-control"/>
+                <input type="mail" name="email" id="email" required="" class="form-control" pattern="^[a-z0-9][a-z0-9._%+-]*@[a-z0-9.-]+\.[a-z]{2,4}\b" title="example@example.com"/>
                 <div id="enUso"></div>
                 <label for="password">Contraseña: </label>
                 <input type="password" name="password" id="password" required="" class="form-control"/>

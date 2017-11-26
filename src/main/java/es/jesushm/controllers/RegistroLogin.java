@@ -41,8 +41,8 @@ public class RegistroLogin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String donde = request.getParameter("enviar");
-        DAOFactory fDAO = DAOFactory.getDAOFactory();
-        IUsuariosDAO uDAO = fDAO.getUsuarioDAO();
+        DAOFactory daoF = DAOFactory.getDAOFactory();
+        IUsuariosDAO uDAO = daoF.getUsuariosDAO();
         if (donde != null) {
             if (donde.equals("registro")) { //parte de registro
                 Cliente cliente = new Cliente();
