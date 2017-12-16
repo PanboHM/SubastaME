@@ -12,26 +12,28 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
 /**
- *
+ * Carga las categorías y características en el contexto
  * @author jesus
  */
+@WebListener
 public class Inicio implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("El método contextInitialized de Inicio ha sido llamdo");
         ServletContext sc = sce.getServletContext();
         DAOFactory daoF = DAOFactory.getDAOFactory();
-        ICategoriasDAO cDAO = daoF.getCategoriaDAO();
+        ICategoriasDAO cDAO = daoF.getCategoriasDAO();
         List<Categoria> catYCar;
-        catYCar = cDAO.getCategorias();
+        catYCar = cDAO.getCategoriasYCaracs();
         if (catYCar != null) {
             sc.setAttribute("categorias", catYCar);
         } else {
             sc.setAttribute("categorias", null);
         }
+        System.out.println("Se han cargado las categorias y caracteristicas en el contexto");
     }
 
     @Override

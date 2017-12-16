@@ -13,14 +13,30 @@ import java.io.Serializable;
  */
 public class Cliente implements Serializable {
 
+    private int idCliente;
     private String nombre;
     private String apellido1;
     private String apellido2;
     private String nif;
     private String direccion;
     private String telefono;
-    private int valorPositivas;
-    private int valorNegativas;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
 
     public String getNombre() {
         return nombre;
@@ -68,22 +84,6 @@ public class Cliente implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public int getValorPositivas() {
-        return valorPositivas;
-    }
-
-    public void setValorPositivas(int valorPositivas) {
-        this.valorPositivas = valorPositivas;
-    }
-
-    public int getValorNegativas() {
-        return valorNegativas;
-    }
-
-    public void setValorNegativas(int valorNegativas) {
-        this.valorNegativas = valorNegativas;
     }
 
 }

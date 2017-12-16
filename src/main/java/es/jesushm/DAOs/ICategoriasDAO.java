@@ -14,5 +14,9 @@ import java.util.List;
  */
 public interface ICategoriasDAO {
 
-    public List<Categoria> getCategorias();
+    /**
+     * Obtiene las categorías y las caracteristicas de cada categoria
+     * @return un ArrayList con las categorías y cada una de sus características
+     */
+    public List<Categoria> getCategoriasYCaracs();
 }

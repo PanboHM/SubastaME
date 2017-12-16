@@ -13,8 +13,13 @@
         <c:import url="/jsp/inc/header.jsp"/>
     </head>
     <body>
-        <c:out value="${requestScope.mensaje}" default="no hay mensaje?"/>
-        <a href="<c:url value="/index.jsp"/>">Inicio</a>
+        <c:import url="/jsp/inc/navBar.jsp"/>
+        <div class="container text-center">
+            <div class="alert alert-${requestScope.status}">
+                <p><c:out value="${requestScope.mensaje}" default="No hay mensaje?"/></p>
+            </div>
+            <a href="<c:url value="/index.jsp"/>"><button type="button" class="btn btn-default botonVerde">Inicio</button></a>
+        </div>
         <c:import url="/jsp/inc/footer.jsp"/>
     </body>
 </html>

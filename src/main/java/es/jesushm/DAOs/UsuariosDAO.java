@@ -7,6 +7,7 @@ package es.jesushm.DAOs;
 
 import es.jesushm.beans.Cliente;
 import es.jesushm.beans.Usuario;
+import es.jesushm.modelo.Utilidades;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 public class UsuariosDAO implements IUsuariosDAO {
 
     @Override
-    public boolean registro(Usuario usuario) {
+    public int setUsuario(Usuario usuario) {
         Connection conexion;
         PreparedStatement preparada = null;
         ResultSet resultado = null;
@@ -37,24 +38,14 @@ public class UsuariosDAO implements IUsuariosDAO {
             resultado = preparada.getGeneratedKeys();
             resultado.next();
             idGenerado = resultado.getInt(1);
-            sql = "insert into clientes values(?,?,?,?,?,?,?,null,null)";
-            preparada = conexion.prepareStatement(sql);
-            preparada.setInt(1, idGenerado);
-            preparada.setString(2, usuario.getClienteU().getNombre());
-            preparada.setString(3, usuario.getClienteU().getApellido1());
-            preparada.setString(4, usuario.getClienteU().getApellido2());
-            preparada.setString(5, usuario.getClienteU().getNif());
-            preparada.setString(6, usuario.getClienteU().getDireccion());
-            preparada.setString(7, usuario.getClienteU().getTelefono());
-            preparada.execute();
         } catch (SQLException ex) {
             System.out.println("ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
-            return false;
+            return -1;
         } finally {
-            cerrarPSyRS(preparada, resultado);
+            Utilidades.cerrarPSyRSyS(preparada, resultado, null);
             ConnectionFactory.closeConnection();
         }
-        return true;
+        return idGenerado;
     }
 
     @Override
@@ -71,18 +62,24 @@ public class UsuariosDAO implements IUsuariosDAO {
             preparada.setString(2, usuario.getPassword());
             resultado = preparada.executeQuery();
             resultado.next();
+            cliente.setIdCliente(resultado.getInt("idCliente"));
             cliente.setNombre(resultado.getString("nombre"));
             cliente.setApellido1(resultado.getString("apellido1"));
             cliente.setApellido2(resultado.getString("apellido2"));
             cliente.setNif(resultado.getString("nif"));
             cliente.setDireccion(resultado.getString("direccion"));
             cliente.setTelefono(resultado.getString("telefono"));
+            cliente.setAvatar(resultado.getString("avatar"));
             usuario.setClienteU(cliente);
+            usuario.setIdUsuario(resultado.getInt("idUsuario"));
+            usuario.setBloqueado(resultado.getString("bloqueado"));
+            usuario.setTipoAcceso(resultado.getString("tipoAcceso"));
+            usuario.setUltimoAcceso(resultado.getTimestamp("ultimoAcceso"));
         } catch (SQLException ex) {
-            System.out.println("ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
+            System.out.println("Login - ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
             return null;
         } finally {
-            cerrarPSyRS(preparada, resultado);
+            Utilidades.cerrarPSyRSyS(preparada, resultado, null);
             ConnectionFactory.closeConnection();
         }
         return usuario;
@@ -94,7 +91,7 @@ public class UsuariosDAO implements IUsuariosDAO {
         PreparedStatement preparada = null;
         ResultSet resultado = null;
         conexion = ConnectionFactory.getConnection();
-        String sql = "select * from usuarios where email = ?";
+        String sql = "select email from usuarios where email = ?";
         try {
             preparada = conexion.prepareStatement(sql);
             preparada.setString(1, email);
@@ -102,30 +99,53 @@ public class UsuariosDAO implements IUsuariosDAO {
             resultado.next();
             resultado.getString("email");
         } catch (SQLException ex) {
-            System.out.println("ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
+            System.out.println("ComprobarEmail - ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
             return false;
         } finally {
-            cerrarPSyRS(preparada, resultado);
+            Utilidades.cerrarPSyRSyS(preparada, resultado, null);
             ConnectionFactory.closeConnection();
         }
         return true;
     }
 
-    private void cerrarPSyRS(PreparedStatement preparada, ResultSet resultado) {
+    @Override
+    public boolean updatePassword(Usuario usuario) {
+        Connection conexion;
+        PreparedStatement preparada = null;
+        conexion = ConnectionFactory.getConnection();
+        String sql = "update usuarios set password = SHA(?) where idUsuario = ?";
         try {
-            if (preparada != null) {
-                preparada.close();
-            }
+            preparada = conexion.prepareStatement(sql);
+            preparada.setString(1, usuario.getPassword());
+            preparada.setInt(2, usuario.getIdUsuario());
+            preparada.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            System.out.println("ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
+            return false;
+        } finally {
+            Utilidades.cerrarPSyRSyS(preparada, null, null);
+            ConnectionFactory.closeConnection();
         }
-        try {
-            if (resultado != null) {
-                resultado.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        return true;
     }
 
+    @Override
+    public void updateUltimoAcceso(Usuario usuario) {
+        Connection conexion;
+        PreparedStatement preparada = null;
+        conexion = ConnectionFactory.getConnection();
+        String sql = "update usuarios set ultimoAcceso = ? where idUsuario = ?";
+        try {
+            preparada = conexion.prepareStatement(sql);
+            Timestamp sqlDate = new Timestamp(usuario.getUltimoAcceso().getTime());
+            preparada.setTimestamp(1, sqlDate);
+            preparada.setInt(2, usuario.getIdUsuario());
+            preparada.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
+        } finally {
+            Utilidades.cerrarPSyRSyS(preparada, null, null);
+            ConnectionFactory.closeConnection();
+        }
+    }
 }

@@ -14,18 +14,54 @@ import java.util.Date;
  */
 public class Usuario implements Serializable {
 
-    private int usuario;
+    private int idUsuario;
     private String email;
     private String password;
     private Date ultimoAcceso;
     private Cliente clienteU;
+    private String tipoAcceso;
+    private String bloqueado;
+    private int valorPositivas;
+    private int valorNegativas;
 
-    public int getUsuario() {
-        return usuario;
+    public String getTipoAcceso() {
+        return tipoAcceso;
     }
 
-    public void setUsuario(int usuario) {
-        this.usuario = usuario;
+    public void setTipoAcceso(String tipoAcceso) {
+        this.tipoAcceso = tipoAcceso;
+    }
+
+    public String getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(String bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
+    public int getValorPositivas() {
+        return valorPositivas;
+    }
+
+    public void setValorPositivas(int valorPositivas) {
+        this.valorPositivas = valorPositivas;
+    }
+
+    public int getValorNegativas() {
+        return valorNegativas;
+    }
+
+    public void setValorNegativas(int valorNegativas) {
+        this.valorNegativas = valorNegativas;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getEmail() {

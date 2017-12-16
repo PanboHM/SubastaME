@@ -7,6 +7,7 @@ package es.jesushm.DAOs;
 
 import es.jesushm.beans.Caracteristica;
 import es.jesushm.beans.Categoria;
+import es.jesushm.modelo.Utilidades;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ import java.util.List;
 public class CategoriasDAO implements ICategoriasDAO {
 
     @Override
-    public List<Categoria> getCategorias() {
+    public List<Categoria> getCategoriasYCaracs() {
         Connection conexion;
         Statement sentencia = null;
         ResultSet resultado = null;
@@ -63,26 +64,9 @@ public class CategoriasDAO implements ICategoriasDAO {
             ex.printStackTrace();
             return null;
         } finally {
-            cerrarSyRS(sentencia, resultado);
+            Utilidades.cerrarPSyRSyS(null, resultado, sentencia);
             ConnectionFactory.closeConnection();
         }
         return categoriasYCaracteristicas;
-    }
-
-    private void cerrarSyRS(Statement sentencia, ResultSet resultado) {
-        try {
-            if (sentencia != null) {
-                sentencia.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        try {
-            if (resultado != null) {
-                resultado.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 }

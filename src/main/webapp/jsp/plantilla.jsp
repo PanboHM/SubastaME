@@ -13,6 +13,7 @@
         <c:import url="/jsp/inc/header.jsp"/>
     </head>
     <body>
+        <c:import url="/jsp/inc/navBar.jsp"/>
         CONTENIDO AQUI
         <c:import url="/jsp/inc/footer.jsp"/>
     </body>

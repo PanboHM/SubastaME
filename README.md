@@ -1,6 +1,17 @@
 # SubastaME
 Práctica SubastaME
 
+### Commit 16 de Diciembre de 2017
+
+* Se ha cambiado la carga dinámica de categorías por AJAX a etiquetas JSTL, más eficiente.
+* Se he creado una interfaz visual experimental
+* Se ha añadido la posibilidad de crear una subasta una vez registrado (aún no pueden verse)
+* Se ha optimizado código
+* Panel de control:
+ ** Cambio de contraseña
+ ** Cambio de datos personales
+ ** Cambio de avatar
+
 ### Commit 26 de Noviembre de 2017
 
 #### UsuariosDAO

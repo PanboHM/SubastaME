@@ -13,6 +13,10 @@ public class ConnectionFactory {
     static Connection conexion = null;
     static final String DATASOURCE_NAME = "java:comp/env/jdbc/SubastaME";
         
+    /**
+     *
+     * @return Object Connection con una conexión de la base de datos
+     */
     public static Connection getConnection(){
         try {
             Context contextoInicial = new InitialContext();
@@ -24,6 +28,9 @@ public class ConnectionFactory {
         return conexion;
     }
     
+    /**
+     * Cierra una conexión
+     */
     public static void closeConnection(){
         try {
             conexion.close();

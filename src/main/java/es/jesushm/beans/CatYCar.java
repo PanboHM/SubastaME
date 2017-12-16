@@ -11,10 +11,28 @@ import java.io.Serializable;
  *
  * @author jesus
  */
-public class Caracteristica implements Serializable {
+public class CatYCar implements Serializable {
 
+    private int id;
+    private int idArticulo;
     private int idCaracteristica;
-    private String denominacion;
+    private String valor;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getIdArticulo() {
+        return idArticulo;
+    }
+
+    public void setIdArticulo(int idArticulo) {
+        this.idArticulo = idArticulo;
+    }
 
     public int getIdCaracteristica() {
         return idCaracteristica;
@@ -24,12 +42,12 @@ public class Caracteristica implements Serializable {
         this.idCaracteristica = idCaracteristica;
     }
 
-    public String getDenominacion() {
-        return denominacion;
+    public String getValor() {
+        return valor;
     }
 
-    public void setDenominacion(String denominacion) {
-        this.denominacion = denominacion;
+    public void setValor(String valor) {
+        this.valor = valor;
     }
 
 }

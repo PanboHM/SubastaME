@@ -9,5 +9,23 @@ and open the template in the editor.
 */
 
 body{
-    color: #999;
+    padding-top: 50px;
+}
+.navbar {
+    border-radius: 0;
+    background-color: #083B66;
+}
+footer {
+    background-color: #5A7C99;
+    padding: 25px;
+}
+
+.botonNaranja{
+    background-color: #E78200;
+    color: white;
+}
+
+.botonVerde{
+    background-color: #74D14C;
+    color: white;
 }

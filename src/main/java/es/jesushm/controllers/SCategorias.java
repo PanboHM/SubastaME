@@ -7,7 +7,6 @@ package es.jesushm.controllers;
 
 import es.jesushm.DAOFactory.DAOFactory;
 import es.jesushm.DAOs.ICategoriasDAO;
-//import es.jesushm.beans.Caracteristica;
 import es.jesushm.beans.Categoria;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class SCategorias extends HttpServlet {
             if (categorias != null) { //si hay categorias las transformamos a un JSONArray
                 
                 JSONArray categoriasJSON = new JSONArray(categorias);
-//                System.out.println("JSON YA: " + categoriasJSON); Puedes usar esto para ver el contenido de tu nuevo JSON en consola
+//                System.out.println("JSON YA: " + categoriasJSON);
 
                 //indicamos al response que lo que añadimos en un JSON
                 response.setContentType("application/json");
@@ -59,10 +58,10 @@ public class SCategorias extends HttpServlet {
         } else {
             //AQUI CARGABA LAS CATEGORIAS EN EL CONTEXTO, PERO CON EL LISTENER IMPLEMENTADO DE MOMENTO ESTO NO SE USA.
             DAOFactory daoF = DAOFactory.getDAOFactory();
-            ICategoriasDAO cDAO = daoF.getCategoriaDAO();
+            ICategoriasDAO cDAO = daoF.getCategoriasDAO();
             List<Categoria> catYCar;
 //        List<Caracteristica> caracteristicas;
-            catYCar = cDAO.getCategorias();
+            catYCar = cDAO.getCategoriasYCaracs();
             if (catYCar != null) {
                 /*
             Comprobación de los datos que me llegan del DAO.

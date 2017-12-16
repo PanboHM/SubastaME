@@ -5,13 +5,21 @@
  */
 package es.jesushm.DAOFactory;
 
+import es.jesushm.DAOs.ArticulosDAO;
+import es.jesushm.DAOs.CaracYArtDAO;
 import es.jesushm.DAOs.CategoriasDAO;
+import es.jesushm.DAOs.ClientesDAO;
+import es.jesushm.DAOs.FotografiasDAO;
+import es.jesushm.DAOs.IArticulosDAO;
+import es.jesushm.DAOs.ICaracYArtDAO;
 import es.jesushm.DAOs.ICategoriasDAO;
+import es.jesushm.DAOs.IClientesDAO;
+import es.jesushm.DAOs.IFotografiasDAO;
 import es.jesushm.DAOs.IUsuariosDAO;
 import es.jesushm.DAOs.UsuariosDAO;
 
 /**
- *
+ * Factoria de DAO´s de MySQL
  * @author jesus
  */
 public class MySQLDAOFactory extends DAOFactory {
@@ -22,8 +30,28 @@ public class MySQLDAOFactory extends DAOFactory {
     }
 
     @Override
-    public ICategoriasDAO getCategoriaDAO() {
+    public ICategoriasDAO getCategoriasDAO() {
         return new CategoriasDAO();
+    }
+
+    @Override
+    public IArticulosDAO getArticulosDAO() {
+        return new ArticulosDAO();
+    }
+
+    @Override
+    public ICaracYArtDAO getCaracYArtDAO() {
+        return new CaracYArtDAO();
+    }
+
+    @Override
+    public IFotografiasDAO getFotografiasDAO() {
+        return new FotografiasDAO();
+    }
+
+    @Override
+    public IClientesDAO getClientesDAO() {
+        return new ClientesDAO();
     }
 
 }

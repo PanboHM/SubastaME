@@ -5,5 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<h1>Esto es el footer</h1>
+<footer class="container-fluid text-center">
+    <p>Texto del footer</p>
+</footer>
