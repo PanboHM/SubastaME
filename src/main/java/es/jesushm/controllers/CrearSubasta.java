@@ -51,9 +51,10 @@ public class CrearSubasta extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * Crea un articulo/subasta en la base de datos
-     * Primero recoge datos del formulari y los comprueba, de ir todo bien los inserta en la base de datos, si sale mal devuelve un  mensaje de error.
-     * 
+     * Crea un articulo/subasta en la base de datos Primero recoge datos del
+     * formulari y los comprueba, de ir todo bien los inserta en la base de
+     * datos, si sale mal devuelve un mensaje de error.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -82,7 +83,7 @@ public class CrearSubasta extends HttpServlet {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         List<FileItem> imagenes = new ArrayList();
-        boolean primeraImagenMal = true;
+        boolean primeraImagenMal = false;
         List<Fotografia> fotografias = new ArrayList();
         Fotografia foto;
 
@@ -105,13 +106,18 @@ public class CrearSubasta extends HttpServlet {
 
             // Hay que comprobar si es un campo de formulario. Si no lo es, se guarda el fichero subido donde nos interese
             if (!uploaded.isFormField()) { // No es campo de formulario, guardamos el fichero en algún sitio
-                if (uploaded.getContentType().equals("image/png") || uploaded.getContentType().equals("image/jpeg")) {
-                    //guardo las imagenes en un arrayList de FileItem porque no las voy a escribir en el servidor hasta comprobar que todo esté correcto
-                    imagenes.add(uploaded);
-                } else {
-                    if (primeraImagenMal) {
+                if (!primeraImagenMal) {
+                    if (uploaded.getContentType().equals("image/png") || uploaded.getContentType().equals("image/jpeg")) {
+                        if (uploaded.getName().length() <= 40) {
+                            //guardo las imagenes en un arrayList de FileItem porque no las voy a escribir en el servidor hasta comprobar que todo esté correcto
+                            imagenes.add(uploaded);
+                        } else {
+                            mensajeError.append("El nombre de los archivos no puede sobrepasar los 35 carácteres");
+                            primeraImagenMal = true;
+                        }
+                    } else {
                         mensajeError.append("Alguno de los archivos introducidos no es una imagen jpeg o png");
-                        primeraImagenMal = false;
+                        primeraImagenMal = true;
                     }
                 }
             } else {
@@ -227,11 +233,11 @@ public class CrearSubasta extends HttpServlet {
 
                     articulo.setFotografias(fotografias);
                     IFotografiasDAO fotoDAO = daoF.getFotografiasDAO();
-                    if (!fotoDAO.setFotografias(articulo)) {
-                        mensajeError.append("Error interno al crear la subasta");
-                    } else {
+                    if (fotoDAO.setFotografias(articulo)) {
                         request.setAttribute("status", "success");
                         request.setAttribute("mensaje", "Subasta correctamente creada");
+                    } else {
+                        mensajeError.append("Error interno al crear la subasta");
                     }
 
                 } else {
@@ -243,6 +249,7 @@ public class CrearSubasta extends HttpServlet {
             if (mensajeError.toString().equals("")) {
                 request.getRequestDispatcher("/jsp/mensaje.jsp").forward(request, response);
             } else {
+                request.setAttribute("articulo", articulo);
                 request.getRequestDispatcher("/jsp/crearSubasta.jsp").forward(request, response);
             }
         } else {

@@ -44,7 +44,8 @@
             <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs">
                 <img src="<c:url value="/img/logo.png"/>" alt="logo" class="img-responsive" style="width:100%"/>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 efecto3D">
+                <h1 class="text-center">Datos de la subasta: </h1>
                 <c:if test="${requestScope.mensajeError!=null}">
                     <div class="alert-danger">
                         ${requestScope.mensajeError}

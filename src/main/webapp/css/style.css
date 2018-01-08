@@ -9,15 +9,52 @@ and open the template in the editor.
 */
 
 body{
-    padding-top: 50px;
+    padding-top: 60px;
 }
+
 .navbar {
     border-radius: 0;
     background-color: #083B66;
 }
+
+.efecto3D{
+    border-left: #5A7C99 solid 3px;
+    border-right: #5A7C99 solid 3px;
+    box-shadow: #999 0px 0px 10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.catalogoSubastas{
+    margin: 25px;
+    border: #5A7C99 solid 3px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: #999 3px 3px 5px;
+    -webkit-transition: -webkit-transform 0.3s ease-in-out 0.1s;
+}
+.catalogoSubastas:hover{
+    -webkit-transform: scale(1.2);
+}
+
+.sliderIndex{
+    border: #5A7C99 solid 3px;
+    box-shadow: #999 3px 3px 5px;
+}
+
+.timer{
+    text-align: center;
+    background-color: #ff6666;
+}
+
 footer {
-    background-color: #5A7C99;
+    margin-top: 25px;
+    background-color: black;
     padding: 25px;
+    color: white;
+}
+footer img{
+    width: 50px;
 }
 
 .botonNaranja{

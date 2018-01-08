@@ -6,6 +6,8 @@
 package es.jesushm.DAOs;
 
 import es.jesushm.beans.Articulo;
+import es.jesushm.beans.CatYCar;
+import java.util.List;
 
 /**
  *
@@ -20,4 +22,10 @@ public interface ICaracYArtDAO {
      */
     public boolean setCaracYart(Articulo articulo);
     
+    /**
+     * Obtiene un entero(idArticulo) y devuelve los valores de las características de ese artículo.
+     * @param idArticulo id del artiuclo
+     * @return devuelve un ArrayList de valores.
+     */
+    public List<CatYCar> getCaracYArt(int idArticulo);
 }

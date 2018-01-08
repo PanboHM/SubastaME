@@ -1,6 +1,12 @@
 # SubastaME
 Práctica SubastaME
 
+### Commit 8 de Enero de 2018
+
+* Pueden visualizarse subastas
+* Pueden realizarse pujas en subastas que no sean del subastador
+* Puede verse un historial de subastas(finalizadas y sin finalizar) y pujas en el panel de control.
+
 ### Commit 16 de Diciembre de 2017
 
 * Se ha cambiado la carga dinámica de categorías por AJAX a etiquetas JSTL, más eficiente.

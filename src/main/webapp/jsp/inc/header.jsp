@@ -15,7 +15,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Libreria para el countdown -->
+<script src="<c:url value="/js/jquery.countdown.min.js"/>"></script>
 <!-- Libreria de jquery general para todas las paginas -->
 <script src="<c:url value="/js/general.js"/>"></script>
 <!-- favicon -->
-<link rel="icon" href="<c:url value="/img/logo2.png"/>">
+<link rel="icon" href="<c:url value="/img/logo.png"/>">

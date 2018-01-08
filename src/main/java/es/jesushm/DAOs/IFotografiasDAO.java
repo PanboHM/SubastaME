@@ -6,6 +6,8 @@
 package es.jesushm.DAOs;
 
 import es.jesushm.beans.Articulo;
+import es.jesushm.beans.Fotografia;
+import java.util.List;
 
 /**
  *
@@ -19,4 +21,13 @@ public interface IFotografiasDAO {
      * @return the boolean true si se han insertado correctamente y false si ha habido fallo
      */
     public boolean setFotografias(Articulo articulo);
+    
+    /**
+     *
+     * Devuelve un ArrayList de fotografías de un artículo en concreto
+     * 
+     * @param idArticulo Entero del artículo en cuestión
+     * @return ArrayList de fotografías del artículo en cuestión.
+     */
+    public List<Fotografia> getFotografias(int idArticulo);
 }

@@ -6,14 +6,19 @@
 package es.jesushm.controllers;
 
 import es.jesushm.DAOFactory.DAOFactory;
+import es.jesushm.DAOs.IArticulosDAO;
 import es.jesushm.DAOs.IClientesDAO;
+import es.jesushm.DAOs.IFotografiasDAO;
 import es.jesushm.DAOs.IUsuariosDAO;
+import es.jesushm.beans.Articulo;
 import es.jesushm.beans.Cliente;
 import es.jesushm.beans.Usuario;
 import es.jesushm.modelo.Utilidades;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -37,11 +42,14 @@ public class RegistroLogin extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * Registra, logea o comprueba el email en la base de datos
-     * Si está registrando, comprobará datos, si están correctos llamará al DAO para insertarlos en la base de datos, sino devuelve un mensaje de error
-     * Si está logeando, llamará a un DAO que comprobará email y password en la base de datos, si está correcto obtendremos todos los datos del usuario si no, mensaje de error
-     * Una llamada de AJAX activará la llamada a un DAO para comprobar si el email está en la base de datos
-     * 
+     * Registra, logea o comprueba el email en la base de datos Si está
+     * registrando, comprobará datos, si están correctos llamará al DAO para
+     * insertarlos en la base de datos, sino devuelve un mensaje de error Si
+     * está logeando, llamará a un DAO que comprobará email y password en la
+     * base de datos, si está correcto obtendremos todos los datos del usuario
+     * si no, mensaje de error Una llamada de AJAX activará la llamada a un DAO
+     * para comprobar si el email está en la base de datos
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -73,7 +81,7 @@ public class RegistroLogin extends HttpServlet {
                     }
                     usuario.setClienteU(cliente);
                     mensajeError.append(Utilidades.comprobarDatosUsuario(usuario));
-                    
+
                     //              Comprobacion de contraseñas iguales
                     if (!request.getParameter("password").equals(request.getParameter("passwordA"))) {
                         mensajeError.append("<p>Las contraseñas no son iguales</p>");
@@ -133,15 +141,33 @@ public class RegistroLogin extends HttpServlet {
                                 request.setAttribute("email", request.getParameter("email"));
                                 request.getRequestDispatcher("/index.jsp").forward(request, response);
                             } else {
+                                session.setAttribute("usuario", usuario);
+                                Usuario usuario2 = new Usuario();
+                                usuario2.setIdUsuario(usuario.getIdUsuario());
+                                usuario2.setUltimoAcceso(ultimoAcceso);
+                                uDAO.updateUltimoAcceso(usuario2);
                                 if (usuario.getTipoAcceso().equals("u")) {
-                                    session.setAttribute("usuario", usuario);
-                                    Usuario usuario2 = new Usuario();
-                                    usuario2.setIdUsuario(usuario.getIdUsuario());
-                                    usuario2.setUltimoAcceso(ultimoAcceso);
-                                    uDAO.updateUltimoAcceso(usuario2);
+                                    List<Articulo> subastasRecientes;
+                                    IArticulosDAO aDAO = daoF.getArticulosDAO();
+                                    IFotografiasDAO fDAO = daoF.getFotografiasDAO();
+                                    subastasRecientes = aDAO.getArticulosUsuario(" where fechaInicio < now() order by fechaInicio desc limit 4");
+                                    for(Articulo artFor: subastasRecientes){
+                                        artFor.setFotografias(fDAO.getFotografias(artFor.getIdArticulo()));
+                                    }
+                                    request.getServletContext().setAttribute("recientes", subastasRecientes);
                                     response.sendRedirect(request.getContextPath() + "/index.jsp");
                                 } else {
-                                    System.out.println("Aqui va la página de administrador");
+                                    List<Usuario> usuarios = uDAO.getUsuarios();
+                                    Usuario usuarioTemp = null;
+                                    for (Usuario usuarioFor : usuarios) {
+                                        if (usuarioFor.getIdUsuario() == usuario.getIdUsuario()) {
+                                            usuarioTemp = usuarioFor;
+                                            break;
+                                        }
+                                    }
+                                    usuarios.remove(usuarioTemp);
+                                    session.setAttribute("listaUsuarios", usuarios);
+                                    request.getRequestDispatcher("/jsp/admin.jsp").forward(request, response);
                                 }
                             }
                         } else {

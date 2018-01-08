@@ -16,10 +16,11 @@
     <body>
         <%@include file="inc/ifNotLogin.jsp" %>
         <c:import url="/jsp/inc/navBar.jsp"/>
-        <div class="container">
+        <div class="container efecto3D">
             <ul class="nav nav-tabs nav-justified">
                 <li class="active"><a data-toggle="tab" href="#perfil">Perfil</a></li>
-                <li><a data-toggle="tab" href="#subastasYPujas">Subastas y pujas</a></li>
+                <li><a data-toggle="tab" href="#misSubastas">Mis subastas</a></li>
+                <li><a data-toggle="tab" href="#misPujas">Mis pujas</a></li>
             </ul>
 
             <div class="tab-content">
@@ -85,9 +86,100 @@
                         <button type="submit" name="controlPanel" value="cambiarDatos" class="btn btn-default botonVerde">Modificar datos</button>
                     </form>
                 </div>
-                <div id="subastasYPujas" class="tab-pane fade">
-                    <h3>Subastas creadas por ti</h3>
-                    <p>Alguna subasta</p>
+                <div id="misSubastas" class="tab-pane fade">
+                    <h2>Subastas finalizadas</h2>
+                    <c:choose>
+                        <c:when test="${misSubastasFinalizadas!=null}">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered table-striped">
+                                    <tr>
+                                        <th>Titulo</th><th>Puja actual</th><th>Ir a subasta</th>
+                                    </tr>
+                                    <c:forEach items="${misSubastasFinalizadas}" var="subasta">
+                                        <tr>
+                                            <td>${subasta.descripcionCorta}</td>
+                                            <c:choose>
+                                                <c:when test="${subasta.pujas[0].importe!=0.0}">
+                                                    <td>${subasta.pujas[0].importe} €</td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td>No ha pujado nadie</td>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <td>
+                                                <a href="<c:url value="/SCatalogoSubastas?idSubasta=${subasta.idArticulo}&idCategoria=${subasta.idCategoria}"/>">
+                                                    <button class="btn btn-default botonVerde">Ir a subasta</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <h3>Ninguna subasta finalizada</h3>
+                        </c:otherwise>
+                    </c:choose>
+                    <h2>Subastas activas</h2>
+                    <c:choose>
+                        <c:when test="${misSubastasActivas!=null}">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered table-striped">
+                                    <tr>
+                                        <th>Titulo</th><th>Puja actual</th><th>Ir a subasta</th>
+                                    </tr>
+                                    <c:forEach items="${misSubastasActivas}" var="subasta">
+                                        <tr>
+                                            <td>${subasta.descripcionCorta}</td>
+                                            <c:choose>
+                                                <c:when test="${subasta.pujas[0].importe!=0.0}">
+                                                    <td>${subasta.pujas[0].importe} €</td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td>No ha pujado nadie</td>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <td>
+                                                <a href="<c:url value="/SCatalogoSubastas?idSubasta=${subasta.idArticulo}&idCategoria=${subasta.idCategoria}"/>">
+                                                    <button class="btn btn-default botonVerde">Ir a subasta</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <h3>Ninguna subasta activa</h3>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                <div id="misPujas" class="tab-pane fade">
+                    <c:choose>
+                        <c:when test="${misPujas!=null}">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered table-striped">
+                                    <tr>
+                                        <th>Titulo</th><th>Puja actual</th><th>Ir a subasta</th>
+                                    </tr>
+                                    <c:forEach items="${misPujas}" var="subasta">
+                                        <tr>
+                                            <td>${subasta.descripcionCorta}</td>
+                                            <td>${subasta.pujas[0].importe} €</td>
+                                            <td>
+                                                <a href="<c:url value="/SCatalogoSubastas?idSubasta=${subasta.idArticulo}&idCategoria=${subasta.idCategoria}"/>">
+                                                    <button class="btn btn-default botonVerde">Ir a subasta</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <h3>No has pujado por nada.</h3>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>

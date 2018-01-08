@@ -19,12 +19,21 @@ public class Articulo implements Serializable {
     private String descripcion;
     private String descripcionCorta;
     private int idCategoria;
-    private Cliente cliente;
     private Date fechaInicio;
     private Date fechaFin;
     private double importeSalida;
+    private Cliente cliente;
     private List<Fotografia> fotografias;
     private List<CatYCar> caracteristicas;
+    private List<Puja> pujas;
+
+    public List<Puja> getPujas() {
+        return pujas;
+    }
+
+    public void setPujas(List<Puja> pujas) {
+        this.pujas = pujas;
+    }
 
     public List<CatYCar> getCaracteristicas() {
         return caracteristicas;

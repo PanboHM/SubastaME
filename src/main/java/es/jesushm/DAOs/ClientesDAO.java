@@ -20,6 +20,7 @@ public class ClientesDAO implements IClientesDAO {
 
     @Override
     public boolean setCliente(Cliente cliente) {
+        boolean correcto = false;
         Connection conexion;
         PreparedStatement preparada = null;
         ResultSet resultado = null;
@@ -35,18 +36,19 @@ public class ClientesDAO implements IClientesDAO {
             preparada.setString(6, cliente.getDireccion());
             preparada.setString(7, cliente.getTelefono());
             preparada.execute();
+            correcto = true;
         } catch (SQLException ex) {
             System.out.println("setCliente - ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
-            return false;
         } finally {
             Utilidades.cerrarPSyRSyS(preparada, resultado, null);
             ConnectionFactory.closeConnection();
         }
-        return true;
+        return correcto;
     }
 
     @Override
     public boolean updateCliente(Cliente cliente) {
+        boolean correcto = false;
         Connection conexion;
         PreparedStatement preparada = null;
         conexion = ConnectionFactory.getConnection();
@@ -61,18 +63,19 @@ public class ClientesDAO implements IClientesDAO {
             preparada.setString(6, cliente.getTelefono());
             preparada.setInt(7, cliente.getIdCliente());
             preparada.executeUpdate();
+            correcto = true;
         } catch (SQLException ex) {
             System.out.println("UpdateCliente - ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
-            return false;
         } finally {
             Utilidades.cerrarPSyRSyS(preparada, null, null);
             ConnectionFactory.closeConnection();
         }
-        return true;
+        return correcto;
     }
 
     @Override
     public boolean updateAvatar(Cliente cliente) {
+        boolean correcto = false;
         Connection conexion;
         PreparedStatement preparada = null;
         conexion = ConnectionFactory.getConnection();
@@ -82,13 +85,13 @@ public class ClientesDAO implements IClientesDAO {
             preparada.setString(1, cliente.getAvatar());
             preparada.setInt(2, cliente.getIdCliente());
             preparada.executeUpdate();
+            correcto = true;
         } catch (SQLException ex) {
             System.out.println("UpdateAvatar - ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
-            return false;
         } finally {
             Utilidades.cerrarPSyRSyS(preparada, null, null);
             ConnectionFactory.closeConnection();
         }
-        return true;
+        return correcto;
     }
 }

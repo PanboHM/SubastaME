@@ -6,6 +6,7 @@
 package es.jesushm.DAOs;
 
 import es.jesushm.beans.Usuario;
+import java.util.List;
 
 /**
  *
@@ -46,4 +47,19 @@ public interface IUsuariosDAO {
      * @param usuario recibe idUsuario y ultimoAcceso
      */
     public void updateUltimoAcceso(Usuario usuario);
+    
+    /**
+     * Devuelve todos los usuarios almacenados en la base de datos
+     * 
+     * @return ArrayList con todos los usuarios
+     */
+    public List<Usuario> getUsuarios();
+    
+    /**
+     * Bloquea o desbloquea un usuario
+     * 
+     * @param usuario usuario a bloquear/desbloquear
+     * @return the boolean
+     */
+    public boolean updateBloqueado(Usuario usuario);
 }

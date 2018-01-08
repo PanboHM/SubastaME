@@ -19,4 +19,12 @@ public interface ICategoriasDAO {
      * @return un ArrayList con las categorías y cada una de sus características
      */
     public List<Categoria> getCategoriasYCaracs();
+    
+    /**
+     * Inserta una nueva categoría en la base de datos
+     * 
+     * @param categoria recibe en él la denominacion y la imagen
+     * @return idCategoria para las características
+     */
+    public int setCategoria(Categoria categoria);
 }

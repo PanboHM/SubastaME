@@ -9,6 +9,7 @@ import es.jesushm.beans.Caracteristica;
 import es.jesushm.beans.Categoria;
 import es.jesushm.modelo.Utilidades;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -68,5 +69,30 @@ public class CategoriasDAO implements ICategoriasDAO {
             ConnectionFactory.closeConnection();
         }
         return categoriasYCaracteristicas;
+    }
+
+    @Override
+    public int setCategoria(Categoria categoria) {
+        Connection conexion = ConnectionFactory.getConnection();
+        PreparedStatement preparada = null;
+        ResultSet resultado = null;
+        int idGenerado = 0;
+        String sql = "insert into categorias(denominacion,imagen) values(?,?)";
+        try {
+            preparada = conexion.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparada.setString(1, categoria.getDenominacion());
+            preparada.setString(2, categoria.getImagen());
+            preparada.executeUpdate();
+            resultado = preparada.getGeneratedKeys();
+            resultado.next();
+            idGenerado = resultado.getInt(1);
+        } catch (SQLException ex) {
+            System.out.println("ErrorCode: " + ex.getErrorCode() + " - SQLState: " + ex.getSQLState() + " - Message: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            Utilidades.cerrarPSyRSyS(preparada, resultado, null);
+            ConnectionFactory.closeConnection();
+        }
+        return idGenerado;
     }
 }
