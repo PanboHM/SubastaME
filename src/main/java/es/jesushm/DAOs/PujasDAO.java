@@ -64,15 +64,14 @@ public class PujasDAO implements IPujasDAO {
         try {
             sentencia = conexion.createStatement();
             resultado = sentencia.executeQuery(sql);
-            resultado.next();
-            do {
+            while (resultado.next()) {
                 puja = new Puja();
                 puja.setFecha(resultado.getTimestamp("fecha"));
                 puja.setIdArticulo(resultado.getInt("idArticulo"));
                 puja.setIdCliente(resultado.getInt("idCliente"));
                 puja.setImporte(resultado.getDouble("importe"));
                 pujas.add(puja);
-            } while (resultado.next());
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ArticulosDAO.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Errror en getPujas");

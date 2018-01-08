@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * Lee las subastas y pujas del usuario en sesión y las carga en el request.
  *
  * @author jesus
  */

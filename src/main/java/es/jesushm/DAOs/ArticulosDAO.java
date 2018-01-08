@@ -146,6 +146,7 @@ public class ArticulosDAO implements IArticulosDAO {
                 articulo = new Articulo();
                 articulo.setIdArticulo(resultado.getInt("idArticulo"));
                 articulo.setDescripcionCorta(resultado.getString("descripcionCorta"));
+                articulo.setImporteSalida(resultado.getDouble("importeSalida"));
 //                articulo.setDescripcion(resultado.getString("descripcion"));
                 articulo.setIdCategoria(resultado.getInt("idCategoria"));
 //            articulo.setFechaInicio(resultado.getDate("fechaInicio"));

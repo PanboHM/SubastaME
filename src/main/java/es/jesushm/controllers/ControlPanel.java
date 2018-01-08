@@ -30,10 +30,12 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
- * Servlet que según el parámetro "controlPanel" hará:
- * Si es null cambiará el avatar
- * Si es "cambiarPassword" cambiará el password del usuario
+ *
+ * Recibe las peticiones de panelDeControl.jsp y cambiará los datos del Cliente,
+ * su contraseña o su avatar. Según el parámetro "controlPanel" hará: Si es null
+ * cambiará el avatar Si es "cambiarPassword" cambiará el password del usuario
  * Si es "cambiarDatos" cambiará los datos del usuario
+ *
  * @author jesus
  */
 @WebServlet(name = "ControlPanel", urlPatterns = {"/ControlPanel"})
@@ -42,9 +44,8 @@ public class ControlPanel extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     * 
-     * Recibe las peticiones de panelDeControl.jsp y cambiará los datos del Cliente, su contraseña o su avatar.
-     * 
+     *
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Carga el catálogo de subastas ó una subasta en concreto.
  * @author jesus
  */
 @WebServlet(name = "SCatalogoSubastas", urlPatterns = {"/SCatalogoSubastas"})

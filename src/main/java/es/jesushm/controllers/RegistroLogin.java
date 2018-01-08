@@ -16,7 +16,6 @@ import es.jesushm.beans.Usuario;
 import es.jesushm.modelo.Utilidades;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,6 +32,14 @@ import org.apache.commons.beanutils.BeanUtils;
 
 /**
  *
+ * Registra, logea o comprueba el email en la base de datos Si está registrando,
+ * comprobará datos, si están correctos llamará al DAO para insertarlos en la
+ * base de datos, sino devuelve un mensaje de error Si está logeando, llamará a
+ * un DAO que comprobará email y password en la base de datos, si está correcto
+ * obtendremos todos los datos del usuario si no, mensaje de error Una llamada
+ * de AJAX activará la llamada a un DAO para comprobar si el email está en la
+ * base de datos
+ *
  * @author jesus
  */
 @WebServlet(name = "RegistroLogin", urlPatterns = {"/RegistroLogin"})
@@ -41,14 +48,6 @@ public class RegistroLogin extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     *
-     * Registra, logea o comprueba el email en la base de datos Si está
-     * registrando, comprobará datos, si están correctos llamará al DAO para
-     * insertarlos en la base de datos, sino devuelve un mensaje de error Si
-     * está logeando, llamará a un DAO que comprobará email y password en la
-     * base de datos, si está correcto obtendremos todos los datos del usuario
-     * si no, mensaje de error Una llamada de AJAX activará la llamada a un DAO
-     * para comprobar si el email está en la base de datos
      *
      * @param request servlet request
      * @param response servlet response
@@ -151,7 +150,7 @@ public class RegistroLogin extends HttpServlet {
                                     IArticulosDAO aDAO = daoF.getArticulosDAO();
                                     IFotografiasDAO fDAO = daoF.getFotografiasDAO();
                                     subastasRecientes = aDAO.getArticulosUsuario(" where fechaInicio < now() order by fechaInicio desc limit 4");
-                                    for(Articulo artFor: subastasRecientes){
+                                    for (Articulo artFor : subastasRecientes) {
                                         artFor.setFotografias(fDAO.getFotografias(artFor.getIdArticulo()));
                                     }
                                     request.getServletContext().setAttribute("recientes", subastasRecientes);

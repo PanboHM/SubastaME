@@ -51,6 +51,7 @@
                                     }
                                 });
                             } else {
+                                $("#pujaActual").html("<h3>Puja inicial: " + ${subasta.importeSalida} + "€</h3>");
                                 $("#pujas").html("No hay pujas sobre este artículo actualmente, ¡Sé el primero en pujar!");
                                 $("#puja5").prop("value",${subasta.importeSalida} + 5);
                                 $("#puja10").prop("value",${subasta.importeSalida} + 10);

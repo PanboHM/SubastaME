@@ -31,6 +31,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
+ * Según el parametro "donde" bloqueará/desbloqueará usuarios o añadirá una
+ * nueva categoría con sus características
  *
  * @author jesus
  */

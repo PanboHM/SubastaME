@@ -1,6 +1,11 @@
 # SubastaME
 Práctica SubastaME
 
+### 2o commit 8 de Enero de 2018
+
+* Se ha añadido más javadoc
+* Se ha corregido un error que permitia insertar una puja inferior al importe Inicial si no habia ninguna puja en esa subasta
+
 ### Commit 8 de Enero de 2018
 
 * Pueden visualizarse subastas

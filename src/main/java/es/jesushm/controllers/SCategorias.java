@@ -19,7 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 
 /**
- *
+ * Recibe una petición AJAX para leer las características de una determinada categoría
+ * 
  * @author jesus
  */
 @WebServlet(name = "SCategorias", urlPatterns = {"/SCategorias"})

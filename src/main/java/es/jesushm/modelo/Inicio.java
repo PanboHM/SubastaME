@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebListener;
 
 /**
  * Carga las categorías y características en el contexto
+ *
  * @author jesus
  */
 @WebListener

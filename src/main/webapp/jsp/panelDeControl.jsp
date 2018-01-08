@@ -100,7 +100,17 @@
                                             <td>${subasta.descripcionCorta}</td>
                                             <c:choose>
                                                 <c:when test="${subasta.pujas[0].importe!=0.0}">
-                                                    <td>${subasta.pujas[0].importe} €</td>
+                                                    <c:choose>
+                                                        <c:when test="${subasta.pujas[0].importe<=50}">
+                                                            <td>${subasta.pujas[0].importe-(subasta.importeSalida+10)} €</td>
+                                                        </c:when>
+                                                        <c:when test="${subasta.pujas[0].importe>120}">
+                                                            <td>${subasta.pujas[0].importe-(subasta.importeSalida+(subasta.pujas[0].importe*0.21))} €</td>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <td>${subasta.pujas[0].importe-(subasta.importeSalida+(subasta.pujas[0].importe*0.15))} €</td>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <td>No ha pujado nadie</td>

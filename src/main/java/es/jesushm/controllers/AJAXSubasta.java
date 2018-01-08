@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 
 /**
+ * Contiene AJAX para pujar y para actualizar la lista de pujas
  *
  * @author jesus
  */
@@ -31,8 +32,6 @@ public class AJAXSubasta extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     *
-     * Contiene AJAX para pujar y para actualizar la lista de pujas
      *
      * @param request servlet request
      * @param response servlet response
@@ -65,7 +64,7 @@ public class AJAXSubasta extends HttpServlet {
                     IArticulosDAO aDAO = daoF.getArticulosDAO();
                     Articulo articulo = aDAO.getArticulo(idArticulo);
                     if (articulo.getFechaFin().after(new Date())) {
-                        if (importePuja > pDAO.getUltimaPuja(idArticulo).getImporte()) {
+                        if (importePuja > pDAO.getUltimaPuja(idArticulo).getImporte() && importePuja > articulo.getImporteSalida()) {
                             Puja pujaPujador = new Puja();
                             pujaPujador.setIdArticulo(idArticulo);
                             pujaPujador.setIdCliente(idPujador);

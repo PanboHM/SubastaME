@@ -40,6 +40,9 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
+ * Crea un articulo/subasta en la base de datos Primero recoge datos del
+ * formulari y los comprueba, de ir todo bien los inserta en la base de datos,
+ * si sale mal devuelve un mensaje de error.
  *
  * @author jesus
  */
@@ -50,10 +53,6 @@ public class CrearSubasta extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
-     *
-     * Crea un articulo/subasta en la base de datos Primero recoge datos del
-     * formulari y los comprueba, de ir todo bien los inserta en la base de
-     * datos, si sale mal devuelve un mensaje de error.
      *
      * @param request servlet request
      * @param response servlet response

@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Contiene métodos usados en varias instancias.
  *
  * @author jesus
  */

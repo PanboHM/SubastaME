@@ -14,6 +14,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
+/**
+ * Filtra las paginas para que los carácteres especiales se muestren correctamente
+ * @author jesus
+ */
 @WebFilter(filterName = "UTF8", urlPatterns = {"/*"})
 public class UTF8 implements Filter {
 
